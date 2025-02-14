@@ -58,6 +58,16 @@ int firstPrimeDivisor(int num) {
     return num;
 }
 
+//выводит матрицу
+void draw(const std::vector<std::vector<int>>& matrix) {
+    for (const auto& row : matrix) {
+        for (int cell : row) {
+            std::cout << cell << "\t";
+        }
+        std::cout << std::endl;
+    }
+    std::cout << std::endl;
+}
 // ------------------------------------------------------------------
 // 2. Разбиение доски
 // ------------------------------------------------------------------
@@ -89,6 +99,7 @@ std::vector<std::tuple<int, int, int>> findMinSquarePartition(int n) {
     int minSquares = std::numeric_limits<int>::max();
     std::vector<std::tuple<int, int, int>> bestSolution; // Лучшее разбиение квадрата
     int newSquareID;
+    std::vector<std::vector<int>> finalMatrix(n, std::vector<int>(n, 0));
 
     std::stack<State> stack; // Стек для хранения состояний при переборе вариантов
     std::vector<std::vector<int>> initialMatrix(n, std::vector<int>(n, 0)); // Исходная пустая матрица
@@ -116,7 +127,6 @@ std::vector<std::tuple<int, int, int>> findMinSquarePartition(int n) {
         stack.pop(); // Убираем его из стека
 
         // Вывод текущего состояния
-        std::cout << "\nИтерация " << iteration << ":\n";
         std::cout << "Текущее количество квадратов: " << state.count << "\n";
         std::cout << "Лучший результат: " << (minSquares != std::numeric_limits<int>::max() ? std::to_string(minSquares) : "не найден") << "\n";
 
@@ -132,14 +142,10 @@ std::vector<std::tuple<int, int, int>> findMinSquarePartition(int n) {
             std::cout << "!!! Найдено новое решение !!!\n";
             std::cout << "Количество квадратов: " << state.count << " (предыдущий минимум: " << minSquares << ")\n";
             std::cout << "Визуализация заполнения:\n";
-            for (const auto& row : state.matrix) {
-                for (int cell : row) {
-                    std::cout << cell << "\t";
-                }
-                std::cout << "\n";
-            }
+            draw(state.matrix);
             minSquares = state.count; // Обновляем минимальное количество квадратов
             bestSolution = state.squares; // Запоминаем разбиение
+            finalMatrix = state.matrix;
             continue;
         }
 
@@ -167,16 +173,10 @@ std::vector<std::tuple<int, int, int>> findMinSquarePartition(int n) {
     // Вывод итогового результата
     std::cout << "\n=== Итоговый результат ===\n";
     std::cout << "Минимальное количество квадратов: " << minSquares << "\n";
-    std::cout << "Расположение квадратов (x, y, size):\n";
-    for (const auto& square : bestSolution) {
-        std::cout << std::get<0>(square) + 1 << " " << std::get<1>(square) + 1 << " " << std::get<2>(square) << "\n";
-    }
 
     // Визуализация матрицы
     std::cout << "\nВизуализация заполнения:\n";
-    for (const auto& row : bestSolution) {
-        std::cout << std::get<0>(row) << "\t" << std::get<1>(row) << "\t" << std::get<2>(row) << "\n";
-    }
+    draw(finalMatrix);
 }
 
 int main() {
