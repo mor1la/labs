@@ -6,7 +6,6 @@
 #include <tuple>
 #include <chrono>
 
-
 // Структура для хранения состояния алгоритма
 struct State {
     std::vector<std::vector<int>> matrix; // Текущая матрица разбиения
@@ -145,6 +144,12 @@ std::vector<std::tuple<int, int, int>> findMinSquarePartition(int n) {
             stack.push({newMatrix, state.count + 1, newSquares});
         }
     }
+    std::cout << minSquares << "\n";
+    for (const std::tuple<int, int, int>& solution : bestSolution) {
+        int x, y, size;
+        std::tie(x, y, size) = solution;  // Явное извлечение значений из tuple
+        std::cout << x + 1 << " " << y + 1 << " " << size << "\n";
+    }
     return bestSolution; // Возвращаем лучшее найденное разбиение
 }
 
@@ -154,28 +159,20 @@ std::vector<std::tuple<int, int, int>> findMinSquarePartition(int n) {
 
 // Функция для исследования времени выполнения от размера квадрата
 void benchmarkPartition(int maxSize) {
-    std::cout << "Size\tEven (ms)\tOdd (ms)\n";
-
-    for (int n = 2; n <= maxSize; n += 2) {
+    for (int n = 2; n <= maxSize; n++) {
         auto start_even = std::chrono::high_resolution_clock::now();
         findMinSquarePartition(n);
         auto end_even = std::chrono::high_resolution_clock::now();
         double time_even = std::chrono::duration<double, std::milli>(end_even - start_even).count();
-
-        auto start_odd = std::chrono::high_resolution_clock::now();
-        findMinSquarePartition(n + 1);
-        auto end_odd = std::chrono::high_resolution_clock::now();
-        double time_odd = std::chrono::duration<double, std::milli>(end_odd - start_odd).count();
-
-        std::cout << n << "\t" << time_even << " ms\t" << n + 1 << "\t" << time_odd << " ms\n";
+        std::cout << n << "\t" << time_even << "\n";
     }
 }
 
 int main() {
     int n;
-    int maxSize = 20;
+    int maxSize = 30;
     std::cin >> n;
     findMinSquarePartition(n);
-    benchmarkPartition(maxSize);
+    //benchmarkPartition(maxSize);
     return 0;
 }
