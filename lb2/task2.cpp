@@ -45,5 +45,5 @@ int check(const std::string& str1, const std::string& str2) {
 int main() {
     std::string str1, str2;
     std::cin >> str1 >> str2;
-    std::cout << check(str1, str2) << '\n';
+    std::cout << check(str2, str1) << '\n';
 }
