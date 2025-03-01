@@ -15,7 +15,6 @@ class vectorClass {
             temp[i] = arr[i];
         }
         
-        
         delete[] arr;  
         arr = temp;
         capacity *= 2;
@@ -39,7 +38,6 @@ class vectorClass {
     size_t getCapacity() {
         return capacity;
     }
-
     
     T getFront(){
         return arr[0];
@@ -72,7 +70,6 @@ class vectorClass {
         if (currentSize == capacity) {
             reserve(); 
         }
-
         for (size_t i = currentSize; i > pos; i--) {
             arr[i] = arr[i - 1]; 
         }
