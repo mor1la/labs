@@ -28,7 +28,7 @@ std::vector<int> computeLPS(const std::string &pattern) {
 
 // Функция поиска подстроки в строке с помощью алгоритма Кнута-Морриса-Пратта
 // Использует предварительно вычисленный LPS-массив для эффективного поиска
-std::vector<int> KMP(const std::string &text, const std::string &pattern) {
+std::vector<int> searchKMP(const std::string &text, const std::string &pattern) {
     std::vector<int> result; // Вектор для хранения индексов вхождения шаблона в текст
     std::vector<int> lps = computeLPS(pattern); // Вычисляем LPS-массив
     int n = text.size(), m = pattern.size(); // Длины текста и шаблона
@@ -57,7 +57,7 @@ std::vector<int> KMP(const std::string &text, const std::string &pattern) {
 int main() {
     std::string pattern, text;
     std::cin >> pattern >> text; // Ввод шаблона и текста с консоли
-    std::vector<int> result = KMP(text, pattern); // Выполняем поиск KMP
+    std::vector<int> result = searchKMP(text, pattern); // Выполняем поиск searchKMP
 
     if (result.empty()) {
         std::cout << -1; // Если вхождений нет, выводим -1

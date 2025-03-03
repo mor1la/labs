@@ -18,7 +18,7 @@ std::vector<int> computeLPS(const std::string& pattern) {
     return lps;
 }
 
-int KMP(const std::string& text, const std::string& pattern) {
+int searchKMP(const std::string& text, const std::string& pattern) {
     std::vector<int> lps = computeLPS(pattern);
     int n = text.size(), m = pattern.size();
     int i = 0, j = 0;
@@ -39,11 +39,11 @@ int KMP(const std::string& text, const std::string& pattern) {
 int check(const std::string& str1, const std::string& str2) {
     if (str1.size() != str2.size() || str1.empty()) return -1;
     std::string str = str2 + str2;
-    return KMP(str, str1);
+    return searchKMP(str, str1);
 }
 
 int main() {
     std::string str1, str2;
     std::cin >> str1 >> str2;
-    std::cout << check(str2, str1) << '\n';
+    std::cout << check(str1, str2) << '\n';
 }

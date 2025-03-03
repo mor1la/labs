@@ -1,44 +1,46 @@
 #include <iostream>
 #include <vector>
 
-// Функция для вычисления массива LPS (Longest Prefix Suffix) для заданной строки
-std::vector<int> computeLPS(const std::string& pattern) {
-    int m = pattern.size();  // Длина паттерна
-    std::vector<int> lps(m, 0);  // Массив LPS, изначально заполнен нулями
-    int i = 1, j = 0;  // Индексы для прохода по строке и для сравнения
-
+// Функция для вычисления массива LPS (Longest Prefix Suffix)
+std::vector<int> computeLPS(const std::string &pattern) {
+    int m = pattern.size(); // Длина шаблона
+    std::vector<int> lps(m, 0); // Вектор для хранения значений LPS
+    int i = 1, j = 0; // i - текущий индекс в шаблоне, j - длина предыдущего наибольшего префикса
+    
     std::cout << "\n=== Вычисление LPS массива для шаблона: " << pattern << " ===\n";
-    // Проходим по строке с паттерном, начиная с индекса 1
+    std::cout << "lps[0] = 0\n";
     while (i < m) {
-        // Если текущие символы совпадают, увеличиваем индекс j, который отслеживает длину префикса
-        if (pattern[i] == pattern[j]) {
-            lps[i++] = ++j;  // Обновляем lps[i] и увеличиваем i и j
-            std::cout << "Совпадение: pattern[" << i-1 << "] == pattern[" << j-1 << "] (" << pattern[i-1] << ") -> lps[" << i-1 << "] = " << j << "\n";
-        } else if (j > 0) {
-            // Если есть частичное совпадение (j > 0), пытаемся уменьшить j, используя информацию из lps
-            std::cout << "Несовпадение: pattern[" << i << "] != pattern[" << j << "] (" << pattern[i] << " != " << pattern[j] << ") -> j = lps[" << j-1 << "] = " << lps[j-1] << "\n";
-            j = lps[j - 1];  // Идем по ранее вычисленным префиксам
+        if (pattern[i] == pattern[j]) { // Если символы совпадают
+            j++; // Увеличиваем длину префикса
+            lps[i] = j; // Записываем значение в LPS-массив
+            std::cout << "Совпадение: pattern[" << i << "] == pattern[" << j-1 << "] (" << pattern[i] << ") -> lps[" << i << "] = " << j << "\n";
+            i++; // Переходим к следующему символу
         } else {
-            // Если символы не совпали, присваиваем lps[i] равным нулю и двигаемся дальше
-            lps[i++] = 0;
-            std::cout << "Несовпадение: pattern[" << i-1 << "] != pattern[" << j << "] (" << pattern[i-1] << " != " << pattern[j] << ") -> lps[" << i-1 << "] = 0\n";
+            if (j > 0) {
+                std::cout << "Несовпадение: pattern[" << i << "] != pattern[" << j << "] (" << pattern[i] << " != " << pattern[j] << ") -> j = lps[" << j-1 << "] = " << lps[j-1] << "\n";
+                j = lps[j - 1]; // Перемещаем j по LPS-массиву
+            } else {
+                lps[i] = 0; // Если нет совпадений, записываем 0
+                std::cout << "Несовпадение: pattern[" << i << "] != pattern[" << j << "] (" << pattern[i] << " != " << pattern[j] << ") -> lps[" << i << "] = 0\n";
+                i++; // Двигаем i дальше
+            }
         }
     }
-
+    
     std::cout << "LPS массив: ";
     for (int val : lps) std::cout << val << " ";
     std::cout << "\n";
-
-    return lps;  // Возвращаем вычисленный массив LPS
+    
+    return lps;
 }
 
-// Функция для поиска подстроки (pattern) в строке (text) с использованием алгоритма KMP
-int KMP(const std::string& text, const std::string& pattern) {
+// Функция для поиска подстроки (pattern) в строке (text) с использованием алгоритма searchKMP
+int searchKMP(const std::string& text, const std::string& pattern) {
     std::vector<int> lps = computeLPS(pattern);  // Получаем массив LPS для паттерна
     int n = text.size(), m = pattern.size();  // Длины строк
     int i = 0, j = 0;  // Индексы для прохода по тексту и паттерну
 
-    std::cout << "\n=== Начало поиска (KMP) ===\n";
+    std::cout << "\n=== Начало поиска (searchKMP) ===\n";
 
     // Проходим по тексту
     while (i < n) {
@@ -53,8 +55,8 @@ int KMP(const std::string& text, const std::string& pattern) {
             if (j > 0) {
                 std::cout << "Несовпадение: text[" << i << "] = " << text[i] 
                           << " и pattern[" << j << "] = " << pattern[j] << "\n";
+                std::cout << "Откат к lps[j" << "-1] = lps["<< j << "-1] = "<< "Теперь j = " << lps[j - 1] << "\n";
                 j = lps[j - 1];
-                std::cout << "Откат к lps[" << j << "]\n";
             } else {
                 i++;
             }
@@ -78,8 +80,8 @@ int check(const std::string& str1, const std::string& str2) {
     std::cout << "\n=== Проверка на вращение ===\n";
     std::cout << "Удвоенная строка str2: " << str << "\n";
     
-    // Используем алгоритм KMP для поиска str1 в удвоенной строке str2
-    int result = KMP(str, str1);
+    // Используем алгоритм searchKMP для поиска str1 в удвоенной строке str2
+    int result = searchKMP(str, str1);
 
     // Выводим результат проверки вращения
     if (result == -1) {

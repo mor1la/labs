@@ -8,6 +8,7 @@ std::vector<int> computeLPS(const std::string &pattern) {
     int i = 1, j = 0; // i - текущий индекс в шаблоне, j - длина предыдущего наибольшего префикса
     
     std::cout << "\n=== Вычисление LPS массива для шаблона: " << pattern << " ===\n";
+    std::cout << "lps[0" << "] = 0\n";
     while (i < m) {
         if (pattern[i] == pattern[j]) { // Если символы совпадают
             j++; // Увеличиваем длину префикса
@@ -34,13 +35,13 @@ std::vector<int> computeLPS(const std::string &pattern) {
 }
 
 // Функция поиска подстроки в строке с помощью алгоритма Кнута-Морриса-Пратта
-std::vector<int> KMP(const std::string &text, const std::string &pattern) {
+std::vector<int> searchKMP(const std::string &text, const std::string &pattern) {
     std::vector<int> result;
     std::vector<int> lps = computeLPS(pattern);
     int n = text.size(), m = pattern.size();
     int i = 0, j = 0;
     
-    std::cout << "\n=== Начало поиска (KMP) ===\n";
+    std::cout << "\n=== Начало поиска (searchKMP) ===\n";
     
     while (i < n) {
         if (text[i] == pattern[j]) {
@@ -58,8 +59,8 @@ std::vector<int> KMP(const std::string &text, const std::string &pattern) {
             if (j > 0) {
                 std::cout << "Несовпадение: text[" << i << "] = " << text[i] 
                           << " и pattern[" << j << "] = " << pattern[j] << "\n";
+                std::cout << "Откат к lps[j" << "-1] = lps["<< j << "-1] = "<< "Теперь j = " << lps[j - 1] << "\n";
                 j = lps[j - 1];
-                std::cout << "Откат к lps[" << j << "]\n";
             } else {
                 i++;
             }
@@ -80,7 +81,7 @@ int main() {
     std::cout << "Введите текст: ";
     std::cin >> text;
     
-    std::vector<int> result = KMP(text, pattern); // Выполняем поиск KMP
+    std::vector<int> result = searchKMP(text, pattern); // Выполняем поиск searchKMP
 
     std::cout << "\n=== Результат поиска: ===\n";
     if (result.empty()) {
