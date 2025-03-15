@@ -1,9 +1,9 @@
 #ifndef TEMPERATURECONVERTER_H
 #define TEMPERATURECONVERTER_H
 
-#include <QString>
+#include "iconverter.h"
 
-class TemperatureConverter {
+class TemperatureConverter : public IConverter {
 public:
     enum Unit {
         Celsius,
@@ -11,8 +11,11 @@ public:
         Kelvin
     };
 
-    static float convert(float tempCelsius, Unit unit);
-    static QString unitToString(Unit unit);
+    // Реализация метода конвертации температуры
+    float convert(float tempCelsius, int unit) const override;
+
+    // Реализация метода для преобразования единицы в строку
+    QString unitToString(int unit) const override;
 };
 
 #endif // TEMPERATURECONVERTER_H

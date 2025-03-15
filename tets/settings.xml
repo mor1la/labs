@@ -1,0 +1,6 @@
+<Settings>
+    <TemperatureUnit>0</TemperatureUnit>  <!-- Индекс температуры, например 0 для Цельсия -->
+    <PressureUnit>1</PressureUnit>  <!-- Индекс давления, например 1 для "мм рт. ст." -->
+    <TemperatureValue>242</TemperatureValue>  <!-- Значение температуры -->
+    <PressureValue>101</PressureValue>  <!-- Значение давления (например, в Па) -->
+</Settings>

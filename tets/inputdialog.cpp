@@ -12,6 +12,10 @@ InputDialog::InputDialog(QWidget *parent, const QString &title, const QString &l
     QPushButton *okButton = new QPushButton("OK", this);
     QPushButton *cancelButton = new QPushButton("Отмена", this);
 
+    QDoubleValidator *validator = new QDoubleValidator(minValue, maxValue, 2, this);
+    validator->setNotation(QDoubleValidator::StandardNotation);
+    inputField->setValidator(validator);
+
     layout->addWidget(prompt);
     layout->addWidget(inputField);
     layout->addWidget(okButton);

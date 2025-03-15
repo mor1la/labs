@@ -1,7 +1,5 @@
 #include "climatecontrol.h"
 
-ClimateControl::ClimateControl() : temperature(0), humidity(0), pressure(0), isOn(false) {}
-
 void ClimateControl::togglePower() {
     isOn = !isOn;
 }
@@ -50,13 +48,14 @@ QString ClimateControl::getTemperatureText() const {
     return QString("Температура: %1°C").arg(temperature);
 }
 
+QString ClimateControl::getPressureText() const {
+    return QString("Давление: %1 Па").arg(pressure);
+}
+
 QString ClimateControl::getHumidityText() const {
     return QString("Влажность: %1%").arg(humidity);
 }
 
-QString ClimateControl::getPressureText() const {
-    return QString("Давление: %1 Па").arg(pressure);
-}
 int ClimateControl::getTemperature() const {
     return temperature;
 }
@@ -77,6 +76,33 @@ void ClimateControl::setPressure(float pressure) {
     this->pressure = pressure;
 }
 
+// Установить влажность вручную, если нужно
 void ClimateControl::setHumidity(float humidity) {
     this->humidity = humidity;
+}
+
+
+// Функция расчета влажности
+float ClimateControl::calculateHumidityBasedOnTemperatureAndPressure() {
+    // Примерная формула для расчета влажности (здесь вставить нужную)
+    const float baseHumidity = 50.0;
+    const float temperatureFactor = 0.2;
+    const float pressureFactor = 0.05;
+
+    float calculatedHumidity = baseHumidity + (temperatureFactor * temperature) - (pressureFactor * pressure);
+
+    if (calculatedHumidity < 0) calculatedHumidity = 0;
+    if (calculatedHumidity > 100) calculatedHumidity = 100;
+
+    return calculatedHumidity;
+}
+
+void ClimateControl::setAirDirection(const QString &direction) {
+    if (direction == "Вверх" || direction == "Вниз" || direction == "Вперед" || direction == "Назад") {
+        airDirection = direction;
+    }
+}
+
+QString ClimateControl::getAirDirection() const {
+    return airDirection;
 }

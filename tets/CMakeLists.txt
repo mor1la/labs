@@ -32,6 +32,14 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         temperatureinputdialog.h temperatureinputdialog.cpp
         pressureinputdialog.h pressureinputdialog.cpp
         humidityinputdialog.h humidityinputdialog.cpp
+        themeswitcher.h themeswitcher.cpp
+        usersettings.h usersettings.cpp
+        settings.xml
+        iconverter.h iconverter.cpp
+        pressureconverter.h pressureconverter.cpp
+        strings.h
+
+
 
 
 

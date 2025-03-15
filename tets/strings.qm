@@ -1,0 +1,19 @@
+#include <QString>
+
+namespace Strings {
+    const QString systemControlTitle = "Система климат-контроля";
+    const QString temperatureUnitsLabel = "Температурные единицы:";
+    const QString pressureUnitsLabel = "Единицы давления:";
+    const QString airDirectionLabel = "Направление подачи воздуха:";
+    const QString toggleButtonLabel = "Переключить тему";
+    const QString increaseTempButtonLabel = "+ Температура";
+    const QString decreaseTempButtonLabel = "- Температура";
+    const QString increaseHumidityButtonLabel = "+ Влажность";
+    const QString decreaseHumidityButtonLabel = "- Влажность";
+    const QString increasePressureButtonLabel = "+ Давление";
+    const QString decreasePressureButtonLabel = "- Давление";
+    const QString inputTemperatureButtonLabel = "Ввести температуру";
+    const QString inputHumidityButtonLabel = "Ввести влажность";
+    const QString inputPressureButtonLabel = "Ввести давление";
+    const QString directionSelectorLabel = "Направление подачи воздуха:";
+}
