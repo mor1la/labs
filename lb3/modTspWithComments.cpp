@@ -355,7 +355,8 @@ int main() {
     int start_vertex;
     std::cin >> start_vertex; // Считываем стартовую вершину
     Matrix matrix;
-    matrix.readMatrixFromConsole();
+    matrix.loadFromFile("2.txt");
+    matrix.print();
     std::vector<std::pair<int, int>> path = {};
     std::vector<std::pair<int, int>> bestPath = {};
     int bestCost = INF;
@@ -364,8 +365,7 @@ int main() {
     if (result.first == INF) {
         std::cout << "No solution\n";
     } else {
-        std::cout << "Cost: " << result.first << "\nPath: ";
-        std::cout << (double)result.first <<"\n";
+        std::cout << "Cost: " << (double)result.first << "\nPath: ";
         for (int v : result.second) {
             std::cout << v << " ";
         }
